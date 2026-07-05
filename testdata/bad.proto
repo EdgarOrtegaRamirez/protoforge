@@ -1,0 +1,6 @@
+message bad_name {
+  string name = 0;
+  string duplicate = 1;
+  string duplicate = 2;
+  string reserved = 19000;
+}
