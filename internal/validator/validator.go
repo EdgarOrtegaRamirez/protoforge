@@ -272,7 +272,7 @@ func validateField(field *models.Field, path string, syntax string, result *Vali
 	if syntax == "proto3" {
 		if field.Label == "required" {
 			addIssue(result, RuleProto3NoRequired, fieldPath,
-				fmt.Sprintf("Proto3 does not support required fields"))
+				"Proto3 does not support required fields")
 		}
 	}
 }
