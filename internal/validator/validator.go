@@ -402,23 +402,23 @@ func FormatValidationResult(vr *ValidationResult) string {
 	}
 
 	if len(vr.Errors) > 0 {
-		sb.WriteString(fmt.Sprintf("\n%d Error(s):\n", len(vr.Errors)))
+		fmt.Fprintf(&sb, "\n%d Error(s):\n", len(vr.Errors))
 		for _, err := range vr.Errors {
-			sb.WriteString(fmt.Sprintf("  [ERROR] [%s] %s: %s\n", err.Rule, err.Path, err.Message))
+			fmt.Fprintf(&sb, "  [ERROR] [%s] %s: %s\n", err.Rule, err.Path, err.Message)
 		}
 	}
 
 	if len(vr.Warnings) > 0 {
-		sb.WriteString(fmt.Sprintf("\n%d Warning(s):\n", len(vr.Warnings)))
+		fmt.Fprintf(&sb, "\n%d Warning(s):\n", len(vr.Warnings))
 		for _, w := range vr.Warnings {
-			sb.WriteString(fmt.Sprintf("  [WARN]  [%s] %s: %s\n", w.Rule, w.Path, w.Message))
+			fmt.Fprintf(&sb, "  [WARN]  [%s] %s: %s\n", w.Rule, w.Path, w.Message)
 		}
 	}
 
 	if len(vr.Info) > 0 {
-		sb.WriteString(fmt.Sprintf("\n%d Info:\n", len(vr.Info)))
+		fmt.Fprintf(&sb, "\n%d Info:\n", len(vr.Info))
 		for _, info := range vr.Info {
-			sb.WriteString(fmt.Sprintf("  [INFO]  [%s] %s: %s\n", info.Rule, info.Path, info.Message))
+			fmt.Fprintf(&sb, "  [INFO]  [%s] %s: %s\n", info.Rule, info.Path, info.Message)
 		}
 	}
 

@@ -555,18 +555,18 @@ func (d *Diff) compareServiceMethods(left, right *models.Service, prefix string)
 func (d *Diff) SummaryText() string {
 	var sb strings.Builder
 
-	sb.WriteString(fmt.Sprintf("Comparing: %s ↔ %s\n", d.LeftName, d.RightName))
+	fmt.Fprintf(&sb, "Comparing: %s ↔ %s\n", d.LeftName, d.RightName)
 	sb.WriteString("\n--- Summary ---\n")
-	sb.WriteString(fmt.Sprintf("Added:     %d\n", d.Summary.Added))
-	sb.WriteString(fmt.Sprintf("Removed:   %d\n", d.Summary.Removed))
-	sb.WriteString(fmt.Sprintf("Modified:  %d\n", d.Summary.Modified))
-	sb.WriteString(fmt.Sprintf("Unchanged: %d\n", d.Summary.Unchanged))
-	sb.WriteString(fmt.Sprintf("Breaking:  %d\n", d.Summary.Breaking))
+	fmt.Fprintf(&sb, "Added:     %d\n", d.Summary.Added)
+	fmt.Fprintf(&sb, "Removed:   %d\n", d.Summary.Removed)
+	fmt.Fprintf(&sb, "Modified:  %d\n", d.Summary.Modified)
+	fmt.Fprintf(&sb, "Unchanged: %d\n", d.Summary.Unchanged)
+	fmt.Fprintf(&sb, "Breaking:  %d\n", d.Summary.Breaking)
 
 	if len(d.Changes) > 0 {
 		sb.WriteString("\n--- Changes ---\n")
 		for _, change := range d.Changes {
-			sb.WriteString(fmt.Sprintf("[%s] %s: %s\n", change.Type, change.Path, change.Message))
+			fmt.Fprintf(&sb, "[%s] %s: %s\n", change.Type, change.Path, change.Message)
 		}
 	}
 

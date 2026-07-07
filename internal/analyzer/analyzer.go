@@ -416,31 +416,31 @@ func (a *Analysis) checkService(svc *models.Service) {
 func (a *Analysis) Summary() string {
 	var sb strings.Builder
 
-	sb.WriteString(fmt.Sprintf("Package: %s\n", a.Package))
-	sb.WriteString(fmt.Sprintf("Syntax:  %s\n", a.Syntax))
+	fmt.Fprintf(&sb, "Package: %s\n", a.Package)
+	fmt.Fprintf(&sb, "Syntax:  %s\n", a.Syntax)
 	sb.WriteString("\n--- Statistics ---\n")
-	sb.WriteString(fmt.Sprintf("Messages:  %d\n", a.Stats.TotalMessages))
-	sb.WriteString(fmt.Sprintf("Enums:     %d\n", a.Stats.TotalEnums))
-	sb.WriteString(fmt.Sprintf("Services:  %d\n", a.Stats.TotalServices))
-	sb.WriteString(fmt.Sprintf("Methods:   %d\n", a.Stats.TotalMethods))
-	sb.WriteString(fmt.Sprintf("Fields:    %d\n", a.Stats.TotalFields))
-	sb.WriteString(fmt.Sprintf("OneOfs:    %d\n", a.Stats.TotalOneOfs))
-	sb.WriteString(fmt.Sprintf("Imports:   %d\n", a.Stats.TotalImports))
-	sb.WriteString(fmt.Sprintf("Options:   %d\n", a.Stats.TotalOptions))
-	sb.WriteString(fmt.Sprintf("Avg Fields/Msg: %.1f\n", a.Stats.AvgFieldsPerMsg))
-	sb.WriteString(fmt.Sprintf("Max Nesting:    %d\n", a.Stats.MaxNesting))
+	fmt.Fprintf(&sb, "Messages:  %d\n", a.Stats.TotalMessages)
+	fmt.Fprintf(&sb, "Enums:     %d\n", a.Stats.TotalEnums)
+	fmt.Fprintf(&sb, "Services:  %d\n", a.Stats.TotalServices)
+	fmt.Fprintf(&sb, "Methods:   %d\n", a.Stats.TotalMethods)
+	fmt.Fprintf(&sb, "Fields:    %d\n", a.Stats.TotalFields)
+	fmt.Fprintf(&sb, "OneOfs:    %d\n", a.Stats.TotalOneOfs)
+	fmt.Fprintf(&sb, "Imports:   %d\n", a.Stats.TotalImports)
+	fmt.Fprintf(&sb, "Options:   %d\n", a.Stats.TotalOptions)
+	fmt.Fprintf(&sb, "Avg Fields/Msg: %.1f\n", a.Stats.AvgFieldsPerMsg)
+	fmt.Fprintf(&sb, "Max Nesting:    %d\n", a.Stats.MaxNesting)
 
 	if len(a.Issues) > 0 {
 		sb.WriteString("\n--- Errors ---\n")
 		for _, issue := range a.Issues {
-			sb.WriteString(fmt.Sprintf("  [%s] %s\n", issue.Rule, issue.Message))
+			fmt.Fprintf(&sb, "  [%s] %s\n", issue.Rule, issue.Message)
 		}
 	}
 
 	if len(a.Warnings) > 0 {
 		sb.WriteString("\n--- Warnings ---\n")
 		for _, warn := range a.Warnings {
-			sb.WriteString(fmt.Sprintf("  [%s] %s\n", warn.Rule, warn.Message))
+			fmt.Fprintf(&sb, "  [%s] %s\n", warn.Rule, warn.Message)
 		}
 	}
 
