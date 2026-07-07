@@ -1,5 +1,5 @@
 # Binaries
-protoforge
+/protoforge
 *.exe
 *.exe~
 *.dll

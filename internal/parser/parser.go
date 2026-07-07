@@ -516,15 +516,16 @@ func (p *Parser) parseEnum() (*models.Enum, error) {
 		}
 
 		word := p.peekWord()
-		if word == "option" {
+		switch word {
+		case "option":
 			opt, err := p.parseOption()
 			if err != nil {
 				return nil, err
 			}
 			enum.Options = append(enum.Options, opt)
-		} else if word == "reserved" {
+		case "reserved":
 			p.skipReserved()
-		} else {
+		default:
 			val, err := p.parseEnumValue()
 			if err != nil {
 				return nil, err
@@ -602,19 +603,20 @@ func (p *Parser) parseService() (*models.Service, error) {
 		}
 
 		word := p.peekWord()
-		if word == "option" {
+		switch word {
+		case "option":
 			opt, err := p.parseOption()
 			if err != nil {
 				return nil, err
 			}
 			svc.Options = append(svc.Options, opt)
-		} else if word == "rpc" {
+		case "rpc":
 			method, err := p.parseMethod()
 			if err != nil {
 				return nil, err
 			}
 			svc.Methods = append(svc.Methods, method)
-		} else {
+		default:
 			p.skipStatement()
 		}
 	}

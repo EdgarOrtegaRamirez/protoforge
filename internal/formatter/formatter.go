@@ -35,17 +35,17 @@ func Format(pf *models.ProtoFile, opts *Options) string {
 
 	// Syntax declaration
 	if pf.Syntax != "" {
-		sb.WriteString(fmt.Sprintf("syntax = \"%s\";\n\n", pf.Syntax))
+		fmt.Fprintf(&sb, "syntax = \"%s\";\n\n", pf.Syntax)
 	}
 
 	// Package
 	if pf.Package != "" {
-		sb.WriteString(fmt.Sprintf("package %s;\n\n", pf.Package))
+		fmt.Fprintf(&sb, "package %s;\n\n", pf.Package)
 	}
 
 	// Options
 	for _, opt := range pf.Options {
-		sb.WriteString(fmt.Sprintf("option %s = %s;\n", opt.Name, formatValue(opt.Value)))
+		fmt.Fprintf(&sb, "option %s = %s;\n", opt.Name, formatValue(opt.Value))
 	}
 	if len(pf.Options) > 0 {
 		sb.WriteString("\n")
@@ -59,7 +59,7 @@ func Format(pf *models.ProtoFile, opts *Options) string {
 		} else if imp.Public {
 			prefix = "public "
 		}
-		sb.WriteString(fmt.Sprintf("import %s\"%s\";\n", prefix, imp.Path))
+		fmt.Fprintf(&sb, "import %s\"%s\";\n", prefix, imp.Path)
 	}
 	if len(pf.Imports) > 0 {
 		sb.WriteString("\n")
@@ -89,7 +89,7 @@ func Format(pf *models.ProtoFile, opts *Options) string {
 func formatMessage(msg *models.Message, indent string, opts *Options) string {
 	var sb strings.Builder
 
-	sb.WriteString(fmt.Sprintf("%smessage %s {\n", indent, msg.Name))
+	fmt.Fprintf(&sb, "%smessage %s {\n", indent, msg.Name)
 	inner := indent + opts.Indent
 
 	// Nested enums first
@@ -117,9 +117,9 @@ func formatMessage(msg *models.Message, indent string, opts *Options) string {
 
 	for _, field := range fields {
 		if field.Label != "" {
-			sb.WriteString(fmt.Sprintf("%s%s %s %s = %d", inner, field.Label, field.Type, field.Name, field.Number))
+			fmt.Fprintf(&sb, "%s%s %s %s = %d", inner, field.Label, field.Type, field.Name, field.Number)
 		} else {
-			sb.WriteString(fmt.Sprintf("%s%s %s = %d", inner, field.Type, field.Name, field.Number))
+			fmt.Fprintf(&sb, "%s%s %s = %d", inner, field.Type, field.Name, field.Number)
 		}
 		if len(field.Options) > 0 {
 			sb.WriteString(" [")
@@ -127,7 +127,7 @@ func formatMessage(msg *models.Message, indent string, opts *Options) string {
 				if i > 0 {
 					sb.WriteString(", ")
 				}
-				sb.WriteString(fmt.Sprintf("%s = %s", opt.Name, opt.Value))
+				fmt.Fprintf(&sb, "%s = %s", opt.Name, opt.Value)
 			}
 			sb.WriteString("]")
 		}
@@ -136,67 +136,67 @@ func formatMessage(msg *models.Message, indent string, opts *Options) string {
 
 	// Maps
 	for _, mf := range msg.Maps {
-		sb.WriteString(fmt.Sprintf("%smap<%s, %s> %s = %d;\n", inner, mf.KeyType, mf.ValueType, mf.Name, mf.Number))
+		fmt.Fprintf(&sb, "%smap<%s, %s> %s = %d;\n", inner, mf.KeyType, mf.ValueType, mf.Name, mf.Number)
 	}
 
 	// Oneofs
 	for _, oo := range msg.OneOfs {
-		sb.WriteString(fmt.Sprintf("%soneof %s {\n", inner, oo.Name))
+		fmt.Fprintf(&sb, "%soneof %s {\n", inner, oo.Name)
 		ooInner := inner + opts.Indent
 		for _, field := range oo.Fields {
-			sb.WriteString(fmt.Sprintf("%s%s %s = %d;\n", ooInner, field.Type, field.Name, field.Number))
+			fmt.Fprintf(&sb, "%s%s %s = %d;\n", ooInner, field.Type, field.Name, field.Number)
 		}
-		sb.WriteString(fmt.Sprintf("%s}\n", inner))
+		fmt.Fprintf(&sb, "%s}\n", inner)
 	}
 
 	// Extensions
 	for _, ext := range msg.Extensions {
 		if ext.RangeEnd == -1 {
-			sb.WriteString(fmt.Sprintf("%sextensions %d to max;\n", inner, ext.RangeStart))
+			fmt.Fprintf(&sb, "%sextensions %d to max;\n", inner, ext.RangeStart)
 		} else if ext.RangeStart == ext.RangeEnd {
-			sb.WriteString(fmt.Sprintf("%sextensions %d;\n", inner, ext.RangeStart))
+			fmt.Fprintf(&sb, "%sextensions %d;\n", inner, ext.RangeStart)
 		} else {
-			sb.WriteString(fmt.Sprintf("%sextensions %d to %d;\n", inner, ext.RangeStart, ext.RangeEnd))
+			fmt.Fprintf(&sb, "%sextensions %d to %d;\n", inner, ext.RangeStart, ext.RangeEnd)
 		}
 	}
 
 	// Options
 	for _, opt := range msg.Options {
-		sb.WriteString(fmt.Sprintf("%soption %s = %s;\n", inner, opt.Name, formatValue(opt.Value)))
+		fmt.Fprintf(&sb, "%soption %s = %s;\n", inner, opt.Name, formatValue(opt.Value))
 	}
 
-	sb.WriteString(fmt.Sprintf("%s}\n", indent))
+	fmt.Fprintf(&sb, "%s}\n", indent)
 	return sb.String()
 }
 
 func formatEnum(enum *models.Enum, indent string, opts *Options) string {
 	var sb strings.Builder
 
-	sb.WriteString(fmt.Sprintf("%senum %s {\n", indent, enum.Name))
+	fmt.Fprintf(&sb, "%senum %s {\n", indent, enum.Name)
 	inner := indent + opts.Indent
 
 	for _, val := range enum.Values {
-		sb.WriteString(fmt.Sprintf("%s%s = %d;\n", inner, val.Name, val.Number))
+		fmt.Fprintf(&sb, "%s%s = %d;\n", inner, val.Name, val.Number)
 	}
 
 	// Options
 	for _, opt := range enum.Options {
-		sb.WriteString(fmt.Sprintf("%soption %s = %s;\n", inner, opt.Name, formatValue(opt.Value)))
+		fmt.Fprintf(&sb, "%soption %s = %s;\n", inner, opt.Name, formatValue(opt.Value))
 	}
 
-	sb.WriteString(fmt.Sprintf("%s}\n", indent))
+	fmt.Fprintf(&sb, "%s}\n", indent)
 	return sb.String()
 }
 
 func formatService(svc *models.Service, opts *Options) string {
 	var sb strings.Builder
 
-	sb.WriteString(fmt.Sprintf("service %s {\n", svc.Name))
+	fmt.Fprintf(&sb, "service %s {\n", svc.Name)
 	inner := opts.Indent
 
 	// Options
 	for _, opt := range svc.Options {
-		sb.WriteString(fmt.Sprintf("%soption %s = %s;\n", inner, opt.Name, formatValue(opt.Value)))
+		fmt.Fprintf(&sb, "%soption %s = %s;\n", inner, opt.Name, formatValue(opt.Value))
 	}
 
 	// Methods
@@ -210,15 +210,15 @@ func formatService(svc *models.Service, opts *Options) string {
 			serverStream = "stream "
 		}
 
-		sb.WriteString(fmt.Sprintf("%srpc %s (%s%s) returns (%s%s)", inner, method.Name, clientStream, method.InputType, serverStream, method.OutputType))
+		fmt.Fprintf(&sb, "%srpc %s (%s%s) returns (%s%s)", inner, method.Name, clientStream, method.InputType, serverStream, method.OutputType)
 
 		if len(method.Options) > 0 {
 			sb.WriteString(" {\n")
 			methodInner := inner + opts.Indent
 			for _, opt := range method.Options {
-				sb.WriteString(fmt.Sprintf("%soption %s = %s;\n", methodInner, opt.Name, formatValue(opt.Value)))
+				fmt.Fprintf(&sb, "%soption %s = %s;\n", methodInner, opt.Name, formatValue(opt.Value))
 			}
-			sb.WriteString(fmt.Sprintf("%s}\n", inner))
+			fmt.Fprintf(&sb, "%s}\n", inner)
 		} else {
 			sb.WriteString(";\n")
 		}
