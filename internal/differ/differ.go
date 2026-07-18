@@ -52,11 +52,11 @@ type Change struct {
 
 // DiffSummary holds summary statistics about the diff.
 type DiffSummary struct {
-	Added    int
-	Removed  int
-	Modified int
+	Added     int
+	Removed   int
+	Modified  int
 	Unchanged int
-	Breaking int
+	Breaking  int
 }
 
 // DiffProtoFiles compares two parsed proto files.

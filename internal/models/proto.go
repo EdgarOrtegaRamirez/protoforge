@@ -8,15 +8,15 @@ import (
 
 // ProtoFile represents a parsed .proto file.
 type ProtoFile struct {
-	Syntax    string         // e.g. "proto3", "proto2"
-	Package   string         // Package declaration
-	Options   []*Option      // File-level options
-	Imports   []*Import      // Import statements
-	Messages  []*Message     // Message definitions
-	Enums     []*Enum        // Enum definitions
-	Services  []*Service     // Service definitions
-	Extensions []*Extension  // Extension ranges (proto2)
-	Comments  map[string]string // Trailing comments keyed by path
+	Syntax     string            // e.g. "proto3", "proto2"
+	Package    string            // Package declaration
+	Options    []*Option         // File-level options
+	Imports    []*Import         // Import statements
+	Messages   []*Message        // Message definitions
+	Enums      []*Enum           // Enum definitions
+	Services   []*Service        // Service definitions
+	Extensions []*Extension      // Extension ranges (proto2)
+	Comments   map[string]string // Trailing comments keyed by path
 }
 
 // Import represents an import statement.
@@ -40,9 +40,9 @@ type Message struct {
 	Name       string
 	Fields     []*Field
 	OneOfs     []*OneOf
-	Messages   []*Message   // Nested messages
-	Enums      []*Enum      // Nested enums
-	Maps       []*MapField  // Map fields
+	Messages   []*Message  // Nested messages
+	Enums      []*Enum     // Nested enums
+	Maps       []*MapField // Map fields
 	Options    []*Option
 	Extensions []*Extension
 	Comment    string
@@ -50,20 +50,20 @@ type Message struct {
 
 // Field represents a message field.
 type Field struct {
-	Number     int
-	Name       string
-	Type       string // The proto type name
-	Label      string // optional, required, repeated, or "" (proto3 default)
+	Number       int
+	Name         string
+	Type         string // The proto type name
+	Label        string // optional, required, repeated, or "" (proto3 default)
 	DefaultValue string
-	Options    []*Option
-	IsMap      bool
-	Comment    string
+	Options      []*Option
+	IsMap        bool
+	Comment      string
 }
 
 // OneOf represents a oneof declaration.
 type OneOf struct {
-	Name   string
-	Fields []*Field
+	Name    string
+	Fields  []*Field
 	Options []*Option
 	Comment string
 }
@@ -107,8 +107,8 @@ type Method struct {
 	Name            string
 	InputType       string
 	OutputType      string
-	ClientStreaming  bool
-	ServerStreaming  bool
+	ClientStreaming bool
+	ServerStreaming bool
 	Options         []*Option
 	Comment         string
 }
@@ -122,13 +122,13 @@ type Extension struct {
 
 // ProtoPackage represents a package analysis result.
 type ProtoPackage struct {
-	Name      string
-	Messages  int
-	Enums     int
-	Services  int
-	Methods   int
-	Fields    int
-	Imports   int
+	Name     string
+	Messages int
+	Enums    int
+	Services int
+	Methods  int
+	Fields   int
+	Imports  int
 }
 
 // FieldLabel represents the label of a field.
@@ -171,9 +171,9 @@ var ScalarTypes = map[string]bool{
 	"sint32": true, "sint64": true,
 	"fixed32": true, "fixed64": true,
 	"sfixed32": true, "sfixed64": true,
-	"bool": true,
+	"bool":   true,
 	"string": true,
-	"bytes": true,
+	"bytes":  true,
 }
 
 // IsScalarType checks if a type name is a built-in scalar type.

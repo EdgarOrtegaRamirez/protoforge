@@ -412,10 +412,10 @@ enum ErrorCode {
 
 func TestParseMapTypeParsing(t *testing.T) {
 	tests := []struct {
-		input   string
-		key     string
-		val     string
-		wantOk  bool
+		input  string
+		key    string
+		val    string
+		wantOk bool
 	}{
 		{"map<string, int32>", "string", "int32", true},
 		{"map<int64, User>", "int64", "User", true},

@@ -18,10 +18,10 @@ type Rule struct {
 
 // ValidationResult holds the result of validation.
 type ValidationResult struct {
-	Valid  bool
-	Errors []*ValidationIssue
+	Valid    bool
+	Errors   []*ValidationIssue
 	Warnings []*ValidationIssue
-	Info   []*ValidationIssue
+	Info     []*ValidationIssue
 }
 
 // ValidationIssue represents a single validation issue.
@@ -297,7 +297,7 @@ func validateMapField(mf *models.MapField, path string, syntax string, result *V
 		"sint32": true, "sint64": true,
 		"fixed32": true, "fixed64": true,
 		"sfixed32": true, "sfixed64": true,
-		"bool": true,
+		"bool":   true,
 		"string": true,
 	}
 	if !validKeyTypes[mf.KeyType] {

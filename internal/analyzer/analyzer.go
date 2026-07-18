@@ -11,31 +11,31 @@ import (
 
 // Analysis holds the results of analyzing a .proto file.
 type Analysis struct {
-	Package     string
-	Syntax      string
-	Stats       *Stats
-	Issues      []*Issue
-	Warnings    []*Issue
-	Imports     []*ImportInfo
-	Messages    []*MessageInfo
-	Enums       []*EnumInfo
-	Services    []*ServiceInfo
+	Package      string
+	Syntax       string
+	Stats        *Stats
+	Issues       []*Issue
+	Warnings     []*Issue
+	Imports      []*ImportInfo
+	Messages     []*MessageInfo
+	Enums        []*EnumInfo
+	Services     []*ServiceInfo
 	Dependencies []string
 }
 
 // Stats holds numerical statistics.
 type Stats struct {
-	TotalMessages  int
-	TotalEnums     int
-	TotalServices  int
-	TotalMethods   int
-	TotalFields    int
-	TotalOneOfs    int
-	TotalImports   int
-	TotalOptions   int
+	TotalMessages   int
+	TotalEnums      int
+	TotalServices   int
+	TotalMethods    int
+	TotalFields     int
+	TotalOneOfs     int
+	TotalImports    int
+	TotalOptions    int
 	AvgFieldsPerMsg float64
-	MaxNesting     int
-	SyntaxVersion  string
+	MaxNesting      int
+	SyntaxVersion   string
 }
 
 // Issue represents a linting or quality issue.
@@ -56,13 +56,13 @@ type ImportInfo struct {
 
 // MessageInfo provides information about a message.
 type MessageInfo struct {
-	Name         string
-	FieldCount   int
-	NestedCount  int
-	OneOfCount   int
-	HasMaps      bool
-	IsNested     bool
-	Path         string
+	Name        string
+	FieldCount  int
+	NestedCount int
+	OneOfCount  int
+	HasMaps     bool
+	IsNested    bool
+	Path        string
 }
 
 // EnumInfo provides information about an enum.
@@ -450,19 +450,19 @@ func (a *Analysis) Summary() string {
 // JSON returns the analysis as a map for JSON serialization.
 func (a *Analysis) JSON() map[string]interface{} {
 	result := map[string]interface{}{
-		"package":  a.Package,
-		"syntax":   a.Syntax,
+		"package": a.Package,
+		"syntax":  a.Syntax,
 		"stats": map[string]interface{}{
-			"total_messages":    a.Stats.TotalMessages,
-			"total_enums":       a.Stats.TotalEnums,
-			"total_services":    a.Stats.TotalServices,
-			"total_methods":     a.Stats.TotalMethods,
-			"total_fields":      a.Stats.TotalFields,
-			"total_oneofs":      a.Stats.TotalOneOfs,
-			"total_imports":     a.Stats.TotalImports,
-			"total_options":     a.Stats.TotalOptions,
+			"total_messages":     a.Stats.TotalMessages,
+			"total_enums":        a.Stats.TotalEnums,
+			"total_services":     a.Stats.TotalServices,
+			"total_methods":      a.Stats.TotalMethods,
+			"total_fields":       a.Stats.TotalFields,
+			"total_oneofs":       a.Stats.TotalOneOfs,
+			"total_imports":      a.Stats.TotalImports,
+			"total_options":      a.Stats.TotalOptions,
 			"avg_fields_per_msg": a.Stats.AvgFieldsPerMsg,
-			"max_nesting":       a.Stats.MaxNesting,
+			"max_nesting":        a.Stats.MaxNesting,
 		},
 	}
 
